@@ -43,60 +43,99 @@ public class CalculatorActivity extends AppCompatActivity {
         button0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editTextValue.setText(editTextValue.getText() + "0");
-            }
+                if(!isHasValue){
+                    editTextValue.setText(null);
+                    isHasValue = true;
+                }
+                editTextValue.setText(editTextValue.getText() + "0");}
         });
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!isHasValue){
+                    editTextValue.setText(null);
+                    isHasValue = true;
+                }
                 editTextValue.setText(editTextValue.getText() + "1");
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!isHasValue){
+                    editTextValue.setText(null);
+                    isHasValue = true;
+                }
                 editTextValue.setText(editTextValue.getText() + "2");
             }
         });
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!isHasValue){
+                    editTextValue.setText(null);
+                    isHasValue = true;
+                }
                 editTextValue.setText(editTextValue.getText() + "3");
             }
         });
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!isHasValue){
+                    editTextValue.setText(null);
+                    isHasValue = true;
+                }
                 editTextValue.setText(editTextValue.getText() + "4");
             }
         });
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!isHasValue){
+                    editTextValue.setText(null);
+                    isHasValue = true;
+                }
                 editTextValue.setText(editTextValue.getText() + "5");
             }
         });
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!isHasValue){
+                    editTextValue.setText(null);
+                    isHasValue = true;
+                }
                 editTextValue.setText(editTextValue.getText() + "6");
             }
         });
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!isHasValue){
+                    editTextValue.setText(null);
+                    isHasValue = true;
+                }
                 editTextValue.setText(editTextValue.getText() + "7");
             }
         });
         button8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!isHasValue){
+                    editTextValue.setText(null);
+                    isHasValue = true;
+                }
                 editTextValue.setText(editTextValue.getText() + "8");
             }
         });
         button9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!isHasValue){
+                    editTextValue.setText(null);
+                    isHasValue = true;
+                }
                 editTextValue.setText(editTextValue.getText() + "9");
             }
         });
@@ -106,24 +145,39 @@ public class CalculatorActivity extends AppCompatActivity {
                 if(!isAdd && !isDiv && !isMul && !isSub){
                     value1 = Float.parseFloat(editTextValue.getText() + "");
                     isAdd = true;
-                    editTextValue.setText(null);
+                    isHasValue = false;
+                    tilValue.setText(value1 + " + ");
                 }else {
                     value2 = Float.parseFloat(editTextValue.getText() + "");
                     if(isAdd){
                         editTextValue.setText(value1 + value2 + "");
-                        isAdd = false;
+                        tilValue.setText(value1 + value2 + " + ");
+                        value1 = Float.parseFloat(editTextValue.getText() + "");
+                        isHasValue = false;
                     }
                     if(isSub){
                         editTextValue.setText(value1 - value2 + "");
+                        tilValue.setText(value1 + value2 + " - ");
+                        value1 = Float.parseFloat(editTextValue.getText() + "");
                         isSub = false;
+                        isAdd = true;
+                        isHasValue = false;
                     }
                     if(isMul){
                         editTextValue.setText(value1 * value2 + "");
+                        tilValue.setText(value1 + value2 + " * ");
+                        value1 = Float.parseFloat(editTextValue.getText() + "");
                         isMul = false;
+                        isAdd = true;
+                        isHasValue = false;
                     }
                     if(isDiv){
                         editTextValue.setText(value1 / value2 + "");
+                        tilValue.setText(value1 + value2 + " / ");
+                        value1 = Float.parseFloat(editTextValue.getText() + "");
                         isDiv = false;
+                        isAdd = true;
+                        isHasValue = false;
                     }
                 }
             }
@@ -134,24 +188,33 @@ public class CalculatorActivity extends AppCompatActivity {
                 if(!isAdd && !isDiv && !isMul && !isSub){
                     value1 = Float.parseFloat(editTextValue.getText() + "");
                     isSub = true;
-                    editTextValue.setText(null);
+                    isHasValue = false;
+                    tilValue.setText(value1 + " - ");
                 }else {
                     value2 = Float.parseFloat(editTextValue.getText() + "");
                     if(isAdd){
                         editTextValue.setText(value1 + value2 + "");
+                        tilValue.setText(value1 + value2 + " + ");
                         isAdd = false;
+                        isHasValue = false;
                     }
                     if(isSub){
                         editTextValue.setText(value1 - value2 + "");
+                        tilValue.setText(value1 + value2 + " - ");
                         isSub = false;
+                        isHasValue = false;
                     }
                     if(isMul){
                         editTextValue.setText(value1 * value2 + "");
+                        tilValue.setText(value1 + value2 + " * ");
                         isMul = false;
+                        isHasValue = false;
                     }
                     if(isDiv){
                         editTextValue.setText(value1 / value2 + "");
+                        tilValue.setText(value1 + value2 + " / ");
                         isDiv = false;
+                        isHasValue = false;
                     }
                 }
             }
@@ -162,24 +225,33 @@ public class CalculatorActivity extends AppCompatActivity {
                 if(!isAdd && !isDiv && !isMul && !isSub){
                     value1 = Float.parseFloat(editTextValue.getText() + "");
                     isMul = true;
-                    editTextValue.setText(null);
+                    isHasValue = false;
+                    tilValue.setText(value1 + " * ");
                 }else {
                     value2 = Float.parseFloat(editTextValue.getText() + "");
                     if(isAdd){
                         editTextValue.setText(value1 + value2 + "");
+                        tilValue.setText(value1 + value2 + " + ");
                         isAdd = false;
+                        isHasValue = false;
                     }
                     if(isSub){
                         editTextValue.setText(value1 - value2 + "");
+                        tilValue.setText(value1 + value2 + " - ");
                         isSub = false;
+                        isHasValue = false;
                     }
                     if(isMul){
                         editTextValue.setText(value1 * value2 + "");
+                        tilValue.setText(value1 + value2 + " * ");
                         isMul = false;
+                        isHasValue = false;
                     }
                     if(isDiv){
                         editTextValue.setText(value1 / value2 + "");
+                        tilValue.setText(value1 + value2 + " / ");
                         isDiv = false;
+                        isHasValue = false;
                     }
                 }
             }
@@ -187,31 +259,36 @@ public class CalculatorActivity extends AppCompatActivity {
         buttonDive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isAdd && !isDiv && !isMul && !isSub && editTextValue.getText() != null){
+                if(!isAdd && !isDiv && !isMul && !isSub ){
                     value1 = Float.parseFloat(editTextValue.getText() + "");
                     isDiv = true;
-                    editTextValue.setText(null);
+                    isHasValue = false;
+                    tilValue.setText(value1 + " / ");
                 }else {
                     value2 = Float.parseFloat(editTextValue.getText() + "");
                     if(isAdd){
                         editTextValue.setText(value1 + value2 + "");
-                        value1 = Float.parseFloat(editTextValue.getText() + "");
+                        tilValue.setText(value1 + value2 + " + ");
                         isAdd = false;
+                        isHasValue = false;
                     }
                     if(isSub){
                         editTextValue.setText(value1 - value2 + "");
-                        value1 = Float.parseFloat(editTextValue.getText() + "");
+                        tilValue.setText(value1 + value2 + " - ");
                         isSub = false;
+                        isHasValue = false;
                     }
                     if(isMul){
                         editTextValue.setText(value1 * value2 + "");
-                        value1 = Float.parseFloat(editTextValue.getText() + "");
+                        tilValue.setText(value1 + value2 + " * ");
                         isMul = false;
+                        isHasValue = false;
                     }
                     if(isDiv){
                         editTextValue.setText(value1 / value2 + "");
-                        value1 = Float.parseFloat(editTextValue.getText() + "");
+                        tilValue.setText(value1 + value2 + " / ");
                         isDiv = false;
+                        isHasValue = false;
                     }
                 }
             }
