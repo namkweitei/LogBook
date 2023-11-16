@@ -21,6 +21,20 @@ public class CalculatorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calulator_layout);
+        // Initialize your buttons here
+        initializeButtons();
+
+        // Set OnClickListener for digit buttons
+        setDigitButtonClickListeners();
+
+        // Set OnClickListener for operator buttons
+        setOperatorButtonClickListeners();
+
+        // Set OnClickListener for equals button
+        setEqualButtonClickListener();
+    }
+    private void initializeButtons() {
+        // Initialize your buttons (button0, button1, ..., buttonEqual, etc.)
         button0 = findViewById(R.id.button0);
         button1 = findViewById(R.id.button1);
         button2 = findViewById(R.id.button2);
@@ -40,285 +54,135 @@ public class CalculatorActivity extends AppCompatActivity {
 
         editTextValue = findViewById(R.id.editTextValue);
         tilValue = findViewById(R.id.tilValue);
-        button0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isHasValue){
-                    editTextValue.setText(null);
-                    isHasValue = true;
-                }
-                editTextValue.setText(editTextValue.getText() + "0");}
-        });
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isHasValue){
-                    editTextValue.setText(null);
-                    isHasValue = true;
-                }
-                editTextValue.setText(editTextValue.getText() + "1");
-            }
-        });
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isHasValue){
-                    editTextValue.setText(null);
-                    isHasValue = true;
-                }
-                editTextValue.setText(editTextValue.getText() + "2");
-            }
-        });
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isHasValue){
-                    editTextValue.setText(null);
-                    isHasValue = true;
-                }
-                editTextValue.setText(editTextValue.getText() + "3");
-            }
-        });
-        button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isHasValue){
-                    editTextValue.setText(null);
-                    isHasValue = true;
-                }
-                editTextValue.setText(editTextValue.getText() + "4");
-            }
-        });
-        button5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isHasValue){
-                    editTextValue.setText(null);
-                    isHasValue = true;
-                }
-                editTextValue.setText(editTextValue.getText() + "5");
-            }
-        });
-        button6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isHasValue){
-                    editTextValue.setText(null);
-                    isHasValue = true;
-                }
-                editTextValue.setText(editTextValue.getText() + "6");
-            }
-        });
-        button7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isHasValue){
-                    editTextValue.setText(null);
-                    isHasValue = true;
-                }
-                editTextValue.setText(editTextValue.getText() + "7");
-            }
-        });
-        button8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isHasValue){
-                    editTextValue.setText(null);
-                    isHasValue = true;
-                }
-                editTextValue.setText(editTextValue.getText() + "8");
-            }
-        });
-        button9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isHasValue){
-                    editTextValue.setText(null);
-                    isHasValue = true;
-                }
-                editTextValue.setText(editTextValue.getText() + "9");
-            }
-        });
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isAdd && !isDiv && !isMul && !isSub){
-                    value1 = Float.parseFloat(editTextValue.getText() + "");
-                    isAdd = true;
-                    isHasValue = false;
-                    tilValue.setText(value1 + " + ");
-                }else {
-                    value2 = Float.parseFloat(editTextValue.getText() + "");
-                    if(isAdd){
-                        editTextValue.setText(value1 + value2 + "");
-                        tilValue.setText(value1 + value2 + " + ");
-                        value1 = Float.parseFloat(editTextValue.getText() + "");
-                        isHasValue = false;
-                    }
-                    if(isSub){
-                        editTextValue.setText(value1 - value2 + "");
-                        tilValue.setText(value1 + value2 + " - ");
-                        value1 = Float.parseFloat(editTextValue.getText() + "");
-                        isSub = false;
-                        isAdd = true;
-                        isHasValue = false;
-                    }
-                    if(isMul){
-                        editTextValue.setText(value1 * value2 + "");
-                        tilValue.setText(value1 + value2 + " * ");
-                        value1 = Float.parseFloat(editTextValue.getText() + "");
-                        isMul = false;
-                        isAdd = true;
-                        isHasValue = false;
-                    }
-                    if(isDiv){
-                        editTextValue.setText(value1 / value2 + "");
-                        tilValue.setText(value1 + value2 + " / ");
-                        value1 = Float.parseFloat(editTextValue.getText() + "");
-                        isDiv = false;
-                        isAdd = true;
-                        isHasValue = false;
-                    }
-                }
-            }
-        });
-        buttonSub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isAdd && !isDiv && !isMul && !isSub){
-                    value1 = Float.parseFloat(editTextValue.getText() + "");
-                    isSub = true;
-                    isHasValue = false;
-                    tilValue.setText(value1 + " - ");
-                }else {
-                    value2 = Float.parseFloat(editTextValue.getText() + "");
-                    if(isAdd){
-                        editTextValue.setText(value1 + value2 + "");
-                        tilValue.setText(value1 + value2 + " + ");
-                        isAdd = false;
-                        isHasValue = false;
-                    }
-                    if(isSub){
-                        editTextValue.setText(value1 - value2 + "");
-                        tilValue.setText(value1 + value2 + " - ");
-                        isSub = false;
-                        isHasValue = false;
-                    }
-                    if(isMul){
-                        editTextValue.setText(value1 * value2 + "");
-                        tilValue.setText(value1 + value2 + " * ");
-                        isMul = false;
-                        isHasValue = false;
-                    }
-                    if(isDiv){
-                        editTextValue.setText(value1 / value2 + "");
-                        tilValue.setText(value1 + value2 + " / ");
-                        isDiv = false;
-                        isHasValue = false;
-                    }
-                }
-            }
-        });
-        buttonMultiply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isAdd && !isDiv && !isMul && !isSub){
-                    value1 = Float.parseFloat(editTextValue.getText() + "");
-                    isMul = true;
-                    isHasValue = false;
-                    tilValue.setText(value1 + " * ");
-                }else {
-                    value2 = Float.parseFloat(editTextValue.getText() + "");
-                    if(isAdd){
-                        editTextValue.setText(value1 + value2 + "");
-                        tilValue.setText(value1 + value2 + " + ");
-                        isAdd = false;
-                        isHasValue = false;
-                    }
-                    if(isSub){
-                        editTextValue.setText(value1 - value2 + "");
-                        tilValue.setText(value1 + value2 + " - ");
-                        isSub = false;
-                        isHasValue = false;
-                    }
-                    if(isMul){
-                        editTextValue.setText(value1 * value2 + "");
-                        tilValue.setText(value1 + value2 + " * ");
-                        isMul = false;
-                        isHasValue = false;
-                    }
-                    if(isDiv){
-                        editTextValue.setText(value1 / value2 + "");
-                        tilValue.setText(value1 + value2 + " / ");
-                        isDiv = false;
-                        isHasValue = false;
-                    }
-                }
-            }
-        });
-        buttonDive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!isAdd && !isDiv && !isMul && !isSub ){
-                    value1 = Float.parseFloat(editTextValue.getText() + "");
-                    isDiv = true;
-                    isHasValue = false;
-                    tilValue.setText(value1 + " / ");
-                }else {
-                    value2 = Float.parseFloat(editTextValue.getText() + "");
-                    if(isAdd){
-                        editTextValue.setText(value1 + value2 + "");
-                        tilValue.setText(value1 + value2 + " + ");
-                        isAdd = false;
-                        isHasValue = false;
-                    }
-                    if(isSub){
-                        editTextValue.setText(value1 - value2 + "");
-                        tilValue.setText(value1 + value2 + " - ");
-                        isSub = false;
-                        isHasValue = false;
-                    }
-                    if(isMul){
-                        editTextValue.setText(value1 * value2 + "");
-                        tilValue.setText(value1 + value2 + " * ");
-                        isMul = false;
-                        isHasValue = false;
-                    }
-                    if(isDiv){
-                        editTextValue.setText(value1 / value2 + "");
-                        tilValue.setText(value1 + value2 + " / ");
-                        isDiv = false;
-                        isHasValue = false;
-                    }
-                }
-            }
-        });
+    }
+    private void setDigitButtonClickListeners() {
+        // Add OnClickListener for digit buttons (0-9)
+        setDigitButtonClickListener(button0, "0");
+        setDigitButtonClickListener(button1, "1");
+        setDigitButtonClickListener(button2, "2");
+        setDigitButtonClickListener(button3, "3");
+        setDigitButtonClickListener(button4, "4");
+        setDigitButtonClickListener(button5, "5");
+        setDigitButtonClickListener(button6, "6");
+        setDigitButtonClickListener(button7, "7");
+        setDigitButtonClickListener(button8, "8");
+        setDigitButtonClickListener(button9, "9");
+        // Repeat for other digit buttons
+    }
+
+    private void setOperatorButtonClickListeners() {
+        // Add OnClickListener for operator buttons (+, -, *, /)
+        setOperatorButtonClickListener(buttonAdd, "+");
+        setOperatorButtonClickListener(buttonSub, "-");
+        setOperatorButtonClickListener(buttonMultiply, "*");
+        setOperatorButtonClickListener(buttonDive, "/");
+        // Repeat for other operator buttons
+    }
+
+    private void setEqualButtonClickListener() {
+        // Add OnClickListener for the equals button
         buttonEqual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isAdd && !isDiv && !isMul && !isSub){
-
-                }else {
-                    value2 = Float.parseFloat(editTextValue.getText() + "");
-                    if(isAdd){
-                        editTextValue.setText(value1 + value2 + "");
-                        isAdd = false;
-                    }
-                    if(isSub){
-                        editTextValue.setText(value1 - value2 + "");
-                        isSub = false;
-                    }
-                    if(isMul){
-                        editTextValue.setText(value1 * value2 + "");
-                        isMul = false;
-                    }
-                    if(isDiv){
-                        editTextValue.setText(value1 / value2 + "");
-                        isDiv = false;
-                    }
-                }
+                handleEqualButtonClick();
             }
         });
     }
 
+    private void setDigitButtonClickListener(Button button, final String digit) {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handleDigitButtonClick(digit);
+            }
+        });
+    }
+
+    private void setOperatorButtonClickListener(Button button, final String operator) {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handleOperatorButtonClick(operator);
+            }
+        });
+    }
+
+    private void handleDigitButtonClick(String digit) {
+        if (!isHasValue) {
+            editTextValue.setText("");
+            isHasValue = true;
+        }
+        editTextValue.append(digit);
+    }
+
+    private void handleOperatorButtonClick(String operator) {
+        if (!isAdd && !isDiv && !isMul && !isSub) {
+            value1 = Float.parseFloat(editTextValue.getText() + "");
+            isHasValue = false;
+            tilValue.setText(value1 + " " + operator + " ");
+            setOperatorFlag(operator);
+        } else {
+            value2 = Float.parseFloat(editTextValue.getText() + "");
+            performCalculation();
+            tilValue.append(value2 + " " + operator + " ");
+            setOperatorFlag(operator);
+        }
+    }
+
+    private void handleEqualButtonClick() {
+        if (isAdd || isSub || isMul || isDiv) {
+            value2 = Float.parseFloat(editTextValue.getText() + "");
+            performCalculation();
+            tilValue.append(value2 + " = ");
+            resetFlags();
+            isHasValue = false;
+        }
+    }
+
+    private void setOperatorFlag(String operator) {
+        resetFlags();
+        isHasValue = false;
+        switch (operator) {
+            case "+":
+                isAdd = true;
+                break;
+            case "-":
+                isSub = true;
+                break;
+            case "*":
+                isMul = true;
+                break;
+            case "/":
+                isDiv = true;
+                break;
+        }
+    }
+
+    private void performCalculation() {
+        if (isAdd) {
+            editTextValue.setText(value1 + value2 + "");
+            value1 = Float.parseFloat(editTextValue.getText() + "");
+        } else if (isSub) {
+            editTextValue.setText(value1 - value2 + "");
+            value1 = Float.parseFloat(editTextValue.getText() + "");
+        } else if (isMul) {
+            editTextValue.setText(value1 * value2 + "");
+            value1 = Float.parseFloat(editTextValue.getText() + "");
+        } else if (isDiv) {
+            if (value2 != 0) {
+                editTextValue.setText(value1 / value2 + "");
+                value1 = Float.parseFloat(editTextValue.getText() + "");
+            } else {
+                // Handle division by zero error
+                editTextValue.setText("Error");
+            }
+        }
+    }
+
+    private void resetFlags() {
+        isAdd = false;
+        isSub = false;
+        isMul = false;
+        isDiv = false;
+    }
 }
