@@ -1,31 +1,35 @@
 package com.NguyenNam.logbook.db.entity;
 
+// Entity class representing a contact in the database
 public class Contact {
 
-    // 1- Constants for Database
+    // Constants for the database table
     public static final String TABLE_NAME = "contacts";
     public static final String COLUMN_ID = "contact_id";
     public static final String COLUMN_NAME = "contact_name";
     public static final String COLUMN_EMAIL = "contact_email";
+    public static final String COLUMN_IMAGE = "contact_image";
 
-    // 2- Variables
+    // Variables representing contact attributes
     private String name;
     private String email;
+    private String imageUri;
     private int id;
 
-    // 3- Constructors
-    public Contact(){
+    // Default constructor
+    public Contact() {
 
     }
 
-    public Contact(String name, String email, int id){
+    // Parameterized constructor for creating a contact with specific values
+    public Contact(String name, String email, int id, String imageUri) {
         this.name = name;
         this.email = email;
         this.id = id;
+        this.imageUri = imageUri;
     }
 
-    // 4- Getters & Setters
-
+    // Getters and setters for contact attributes
 
     public String getName() {
         return name;
@@ -51,18 +55,20 @@ public class Contact {
         this.id = id;
     }
 
+    public String getImageUri() {
+        return imageUri;
+    }
 
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
+    }
 
-    // 5- SQL Query: Creating the Table
+    // SQL query for creating the contacts table
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLUMN_NAME + " TEXT,"
-//                    + COLUMN_EMAIL + " DATETIME DEFAULT CURRENT_TIMESTAMP"
-                    + COLUMN_EMAIL + " TEXT"
+                    + COLUMN_EMAIL + " TEXT,"
+                    + COLUMN_IMAGE + " TEXT "
                     + ")";
-
-
-
-
 }

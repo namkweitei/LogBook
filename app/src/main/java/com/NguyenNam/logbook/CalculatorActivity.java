@@ -1,27 +1,31 @@
 package com.NguyenNam.logbook;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-
 public class CalculatorActivity extends AppCompatActivity {
-    public Button button1,button2,button3,button4,button5,button6,button7,button8,button9,button0,buttonAdd,buttonSub,buttonMultiply,buttonDive,buttonEqual,buttonC;
-    private EditText editTextValue;
-    private TextView tilValue;
-    private float value1, value2;
+    // Declare buttons for digits, operators, and other UI elements
+    public Button buttonNumberOne, buttonNumberTwo, buttonNumberThree, buttonNumberFour, buttonNumberFive, button6, buttonNumberSeven, buttonNumberEight, buttonNumberNine, buttonNumberZero, butonAdd, butonSub, butonMultiply, butonDive, butonEqual, butonC;
+
+    // Declare EditText for displaying and entering values
+    private EditText editText_Value;
+
+    // Declare TextView for displaying the calculation history
+    private TextView til_Value;
+
+    // Declare variables to store operand values and flags for selected operator
+    private float value_1, value_2;
     private boolean isAdd, isSub, isMul, isDiv, isHasValue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calulator_layout);
-        // Initialize your buttons here
+
+        // Initialize UI elements (buttons, EditText, TextView)
         initializeButtons();
 
         // Set OnClickListener for digit buttons
@@ -30,65 +34,82 @@ public class CalculatorActivity extends AppCompatActivity {
         // Set OnClickListener for operator buttons
         setOperatorButtonClickListeners();
 
-        // Set OnClickListener for equals button
+        // Set OnClickListener for equals button and clear button
         setEqualButtonClickListener();
     }
-    private void initializeButtons() {
-        // Initialize your buttons (button0, button1, ..., buttonEqual, etc.)
-        button0 = findViewById(R.id.button0);
-        button1 = findViewById(R.id.button1);
-        button2 = findViewById(R.id.button2);
-        button3 = findViewById(R.id.button3);
-        button4 = findViewById(R.id.button4);
-        button5 = findViewById(R.id.button5);
-        button6 = findViewById(R.id.button6);
-        button7 = findViewById(R.id.button7);
-        button8 = findViewById(R.id.button8);
-        button9 = findViewById(R.id.button9);
-        buttonAdd = findViewById(R.id.buttonAdd);
-        buttonSub = findViewById(R.id.buttonSubtract);
-        buttonMultiply = findViewById(R.id.buttonMultiply);
-        buttonDive = findViewById(R.id.buttonDivide);
-        buttonEqual = findViewById(R.id.buttonEqual);
-        buttonC = findViewById(R.id.buttonC);
 
-        editTextValue = findViewById(R.id.editTextValue);
-        tilValue = findViewById(R.id.tilValue);
+    // Method to initialize UI elements
+    private void initializeButtons() {
+        // Initialize buttons and UI elements by finding their IDs
+        // (button0, button1, ..., buttonEqual, etc.)
+        buttonNumberZero = findViewById(R.id.button0);
+        buttonNumberOne = findViewById(R.id.button1);
+        buttonNumberTwo = findViewById(R.id.button2);
+        buttonNumberThree = findViewById(R.id.button3);
+        buttonNumberFour = findViewById(R.id.button4);
+        buttonNumberFive = findViewById(R.id.button5);
+        button6 = findViewById(R.id.button6);
+        buttonNumberSeven = findViewById(R.id.button7);
+        buttonNumberEight = findViewById(R.id.button8);
+        buttonNumberNine = findViewById(R.id.button9);
+        butonAdd = findViewById(R.id.buttonAdd);
+        butonSub = findViewById(R.id.buttonSubtract);
+        butonMultiply = findViewById(R.id.buttonMultiply);
+        butonDive = findViewById(R.id.buttonDivide);
+        butonEqual = findViewById(R.id.buttonEqual);
+        butonC = findViewById(R.id.buttonC);
+
+        // Initialize EditText and TextView
+        editText_Value = findViewById(R.id.editTextValue);
+        til_Value = findViewById(R.id.tilValue);
     }
+
+    // Method to set OnClickListener for digit buttons (0-9)
     private void setDigitButtonClickListeners() {
         // Add OnClickListener for digit buttons (0-9)
-        setDigitButtonClickListener(button0, "0");
-        setDigitButtonClickListener(button1, "1");
-        setDigitButtonClickListener(button2, "2");
-        setDigitButtonClickListener(button3, "3");
-        setDigitButtonClickListener(button4, "4");
-        setDigitButtonClickListener(button5, "5");
+        setDigitButtonClickListener(buttonNumberZero, "0");
+        setDigitButtonClickListener(buttonNumberOne, "1");
+        setDigitButtonClickListener(buttonNumberTwo, "2");
+        setDigitButtonClickListener(buttonNumberThree, "3");
+        setDigitButtonClickListener(buttonNumberFour, "4");
+        setDigitButtonClickListener(buttonNumberFive, "5");
         setDigitButtonClickListener(button6, "6");
-        setDigitButtonClickListener(button7, "7");
-        setDigitButtonClickListener(button8, "8");
-        setDigitButtonClickListener(button9, "9");
-        // Repeat for other digit buttons
+        setDigitButtonClickListener(buttonNumberSeven, "7");
+        setDigitButtonClickListener(buttonNumberEight, "8");
+        setDigitButtonClickListener(buttonNumberNine, "9");
     }
 
+    // Method to set OnClickListener for operator buttons (+, -, *, /)
     private void setOperatorButtonClickListeners() {
         // Add OnClickListener for operator buttons (+, -, *, /)
-        setOperatorButtonClickListener(buttonAdd, "+");
-        setOperatorButtonClickListener(buttonSub, "-");
-        setOperatorButtonClickListener(buttonMultiply, "*");
-        setOperatorButtonClickListener(buttonDive, "/");
-        // Repeat for other operator buttons
+        setOperatorButtonClickListener(butonAdd, "+");
+        setOperatorButtonClickListener(butonSub, "-");
+        setOperatorButtonClickListener(butonMultiply, "*");
+        setOperatorButtonClickListener(butonDive, "/");
     }
 
+    // Method to set OnClickListener for equals button and clear button
     private void setEqualButtonClickListener() {
         // Add OnClickListener for the equals button
-        buttonEqual.setOnClickListener(new View.OnClickListener() {
+        butonEqual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 handleEqualButtonClick();
             }
         });
+
+        // Add OnClickListener for the clear button
+        butonC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editText_Value.setText("0");
+                til_Value.setText(null);
+                isHasValue = false;
+            }
+        });
     }
 
+    // Method to set OnClickListener for digit buttons
     private void setDigitButtonClickListener(Button button, final String digit) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +119,7 @@ public class CalculatorActivity extends AppCompatActivity {
         });
     }
 
+    // Method to set OnClickListener for operator buttons
     private void setOperatorButtonClickListener(Button button, final String operator) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,38 +129,45 @@ public class CalculatorActivity extends AppCompatActivity {
         });
     }
 
+    // Method to handle digit button click
     private void handleDigitButtonClick(String digit) {
         if (!isHasValue) {
-            editTextValue.setText("");
+            editText_Value.setText("");
             isHasValue = true;
         }
-        editTextValue.append(digit);
+        editText_Value.append(digit);
     }
 
+    // Method to handle operator button click
     private void handleOperatorButtonClick(String operator) {
         if (!isAdd && !isDiv && !isMul && !isSub) {
-            value1 = Float.parseFloat(editTextValue.getText() + "");
+            // If no operator is selected, set the first operand and operator
+            value_1 = Float.parseFloat(editText_Value.getText() + "");
             isHasValue = false;
-            tilValue.setText(value1 + " " + operator + " ");
+            til_Value.setText(value_1 + " " + operator + " ");
             setOperatorFlag(operator);
         } else {
-            value2 = Float.parseFloat(editTextValue.getText() + "");
+            // If an operator is already selected, set the second operand and perform calculation
+            value_2 = Float.parseFloat(editText_Value.getText() + "");
             performCalculation();
-            tilValue.append(value2 + " " + operator + " ");
+            til_Value.append(value_2 + " " + operator + " ");
             setOperatorFlag(operator);
         }
     }
 
+    // Method to handle equals button click
     private void handleEqualButtonClick() {
         if (isAdd || isSub || isMul || isDiv) {
-            value2 = Float.parseFloat(editTextValue.getText() + "");
+            // If an operator is selected, set the second operand and perform calculation
+            value_2 = Float.parseFloat(editText_Value.getText() + "");
             performCalculation();
-            tilValue.append(value2 + " = ");
+            til_Value.append(value_2 + " = ");
             resetFlags();
             isHasValue = false;
         }
     }
 
+    // Method to set the selected operator flag
     private void setOperatorFlag(String operator) {
         resetFlags();
         isHasValue = false;
@@ -158,27 +187,29 @@ public class CalculatorActivity extends AppCompatActivity {
         }
     }
 
+    // Method to perform the calculation based on the selected operator
     private void performCalculation() {
         if (isAdd) {
-            editTextValue.setText(value1 + value2 + "");
-            value1 = Float.parseFloat(editTextValue.getText() + "");
+            editText_Value.setText(value_1 + value_2 + "");
+            value_1 = Float.parseFloat(editText_Value.getText() + "");
         } else if (isSub) {
-            editTextValue.setText(value1 - value2 + "");
-            value1 = Float.parseFloat(editTextValue.getText() + "");
+            editText_Value.setText(value_1 - value_2 + "");
+            value_1 = Float.parseFloat(editText_Value.getText() + "");
         } else if (isMul) {
-            editTextValue.setText(value1 * value2 + "");
-            value1 = Float.parseFloat(editTextValue.getText() + "");
+            editText_Value.setText(value_1 * value_2 + "");
+            value_1 = Float.parseFloat(editText_Value.getText() + "");
         } else if (isDiv) {
-            if (value2 != 0) {
-                editTextValue.setText(value1 / value2 + "");
-                value1 = Float.parseFloat(editTextValue.getText() + "");
+            if (value_2 != 0) {
+                editText_Value.setText(value_1 / value_2 + "");
+                value_1 = Float.parseFloat(editText_Value.getText() + "");
             } else {
                 // Handle division by zero error
-                editTextValue.setText("Error");
+                editText_Value.setText("Error");
             }
         }
     }
 
+    // Method to reset operator flags
     private void resetFlags() {
         isAdd = false;
         isSub = false;

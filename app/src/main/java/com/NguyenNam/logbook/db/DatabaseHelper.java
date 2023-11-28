@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-
 import com.NguyenNam.logbook.db.entity.Contact;
 
 import java.util.ArrayList;
@@ -16,79 +15,63 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "contact_db";
 
+    // Constructor
     public DatabaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-
-
+    // Called when the database is created for the first time
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        // Create the contact table
         sqLiteDatabase.execSQL(Contact.CREATE_TABLE);
-
-
-
-
     }
 
+    // Called when the database needs to be upgraded
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-
+        // Drop the existing table and recreate it
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Contact.TABLE_NAME);
-
         onCreate(sqLiteDatabase);
-
     }
 
-    // Getting Contact from DataBase
+    // Get a specific contact by its ID
     public Contact getContact(long id){
-
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(Contact.TABLE_NAME,
-                new String[]{
-                        Contact.COLUMN_ID,
-                        Contact.COLUMN_NAME,
-                        Contact.COLUMN_EMAIL},
-                Contact.COLUMN_ID + "=?",
-                new String[]{
-                        String.valueOf(id)
-                },
-                null,
-                null,
-                null,
-                null);
+        String selectQuery = "SELECT * FROM " + Contact.TABLE_NAME + " WHERE " + Contact.COLUMN_ID + " = " + id;
 
-        if (cursor !=null)
-            cursor.moveToFirst();
+        try (Cursor cursor = db.rawQuery(selectQuery, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                return new Contact(
+                        cursor.getString(cursor.getColumnIndexOrThrow(Contact.COLUMN_NAME)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(Contact.COLUMN_EMAIL)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(Contact.COLUMN_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(Contact.COLUMN_IMAGE))
+                );
+            }
+        }
 
-        Contact contact = new Contact(
-                cursor.getString(cursor.getColumnIndexOrThrow(Contact.COLUMN_NAME)),
-                cursor.getString(cursor.getColumnIndexOrThrow(Contact.COLUMN_EMAIL)),
-                cursor.getInt(cursor.getColumnIndexOrThrow(Contact.COLUMN_ID))
-        );
-
-        cursor.close();
-        return contact;
-
+        return null;
     }
 
-    // Getting all Contacts
+    // Get all contacts from the database
     public ArrayList<Contact> getAllContacts(){
         ArrayList<Contact> contacts = new ArrayList<>();
 
-
-        String selectQuery = "SELECT * FROM " +Contact.TABLE_NAME + " ORDER BY "+
+        // Query to select all contacts, ordered by ID in descending order
+        String selectQuery = "SELECT * FROM " + Contact.TABLE_NAME + " ORDER BY "+
                 Contact.COLUMN_ID + " DESC";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()){
             do{
+                // Create a contact object for each row and add it to the list
                 Contact contact = new Contact();
                 contact.setId(cursor.getInt(cursor.getColumnIndexOrThrow(Contact.COLUMN_ID)));
                 contact.setName(cursor.getString(cursor.getColumnIndexOrThrow(Contact.COLUMN_NAME)));
                 contact.setEmail(cursor.getString(cursor.getColumnIndexOrThrow(Contact.COLUMN_EMAIL)));
-
+                contact.setImageUri(cursor.getString(cursor.getColumnIndexOrThrow(Contact.COLUMN_IMAGE)));
                 contacts.add(contact);
 
             }while(cursor.moveToNext());
@@ -99,14 +82,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return contacts;
     }
 
-    // Insert Data into Database
-    public long insertContact(String name, String email){
+    // Insert a new contact into the database
+    public long insertContact(String name, String email,  String imageResource){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(Contact.COLUMN_NAME, name);
         values.put(Contact.COLUMN_EMAIL, email);
+        values.put(Contact.COLUMN_IMAGE, imageResource);
 
+        // Insert the new contact and get its ID
         long id = db.insert(Contact.TABLE_NAME, null, values);
 
         db.close();
@@ -114,25 +99,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    // Update an existing contact in the database
     public int updateContact(Contact contact){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(Contact.COLUMN_NAME, contact.getName());
         values.put(Contact.COLUMN_EMAIL, contact.getEmail());
+        values.put(Contact.COLUMN_IMAGE, contact.getImageUri());
 
-//        return db.update(Contact.TABLE_NAME, values,Contact.COLUMN_ID+ " = ? ",
-//                new String[]{String.valueOf(contact.getId())});
-
+        // Update the contact based on its ID
         int rowsUpdated = db.update(Contact.TABLE_NAME, values, Contact.COLUMN_ID + " = ? ",
                 new String[]{String.valueOf(contact.getId())});
 
         db.close(); // Close the database
 
         return rowsUpdated;
-
     }
 
+    // Delete a contact from the database
     public void deleteContact(Contact contact){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(Contact.TABLE_NAME, Contact.COLUMN_ID + " = ?",
@@ -140,7 +125,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         );
         db.close();
     }
-
-
-
 }

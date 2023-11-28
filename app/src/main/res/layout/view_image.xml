@@ -5,12 +5,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- ImageView to display images with center crop scaling -->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
 
+    <!-- Button for navigating to the previous image -->
     <Button
         android:id="@+id/btnPrevious"
         android:layout_width="wrap_content"
@@ -20,6 +22,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"/>
 
+    <!-- Button for navigating to the next image -->
     <Button
         android:id="@+id/btnNext"
         android:layout_width="wrap_content"
